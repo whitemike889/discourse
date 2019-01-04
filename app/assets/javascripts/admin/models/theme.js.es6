@@ -191,9 +191,7 @@ const Theme = RestModel.extend({
   },
 
   saveTranslation(name, value) {
-    const translations = {};
-    translations[name] = value;
-    return this.save({ translations });
+    return this.save({ translations: { [name]: value } });
   }
 });
 

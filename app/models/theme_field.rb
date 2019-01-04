@@ -198,9 +198,9 @@ COMPILED
         /* Translation data for theme #{self.theme_id} (#{self.name})*/
         const data = #{data.to_json};
 
-        for (var lang in data){
-          var cursor = I18n.translations;
-          for (var key of [lang, "js", "theme_translations"]){
+        for (let lang in data){
+          let cursor = I18n.translations;
+          for (let key of [lang, "js", "theme_translations"]){
             cursor = cursor[key] = cursor[key] || {};
           }
           cursor[#{self.theme_id}] = data[lang];

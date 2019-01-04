@@ -20,3 +20,8 @@ end
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
+# Indexes
+#
+#  index_theme_translation_overrides_on_theme_id  (theme_id)
+#  theme_translation_overrides_unique             (theme_id,locale,translation_key) UNIQUE
+#

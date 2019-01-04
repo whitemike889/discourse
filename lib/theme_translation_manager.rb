@@ -42,7 +42,9 @@ class ThemeTranslationManager
   end
 
   def db_record
-    theme.theme_translation_overrides.to_a.find { |i| i.locale.to_s == @locale.to_s && i.translation_key.to_s == key.to_s }
+    theme.theme_translation_overrides.to_a.find do |i|
+      i.locale.to_s == @locale.to_s && i.translation_key.to_s == key.to_s
+    end
   end
 
   def has_record?
@@ -50,8 +52,6 @@ class ThemeTranslationManager
   end
 
   def create_record!(value)
-    record = ThemeTranslationOverride.new(locale: @locale, translation_key: @key, theme: @theme, value: value)
-    record.save!
-    record
+    record = ThemeTranslationOverride.create!(locale: @locale, translation_key: @key, theme: @theme, value: value)
   end
 end

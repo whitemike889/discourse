@@ -15,7 +15,7 @@ function inject(context, parent, key, value) {
   }
 
   if (!parent) {
-    context.set(`${key}`, value);
+    context.set(key, value);
     return;
   }
 
