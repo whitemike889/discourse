@@ -95,6 +95,16 @@ export default Ember.Controller.extend({
     return settings.length > 0;
   },
 
+  @computed("model.translations")
+  translations(translations) {
+    return translations.map(setting => ThemeSettings.create(setting));
+  },
+
+  @computed("translations")
+  hasTranslations(translations) {
+    return translations.length > 0;
+  },
+
   @computed("model.remoteError", "updatingRemote")
   showRemoteError(errorMessage, updating) {
     return errorMessage && !updating;
