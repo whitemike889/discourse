@@ -192,6 +192,43 @@ describe AdminDashboardData do
     end
   end
 
+  describe 'pwa_config_check' do
+    it 'alerts for large_icon missing' do
+      SiteSetting.large_icon = nil
+      expect(subject).to eq(I18n.t('dashboard.pwa_config_icon_warning', base_path: Discourse.base_path))
+    end
+
+    it 'alerts for short_title missing' do
+      SiteSetting.large_icon.url = '/logo.png'
+      SiteSetting.large_icon.width = 512
+      SiteSetting.large_icon.height = 512
+      expect(subject).to eq(I18n.t('dashboard.pwa_config_title_warning', base_path: Discourse.base_path))
+    end
+
+    it 'alerts for incompatible large_icon' do
+      SiteSetting.large_icon.url = '/logo.png'
+      SiteSetting.large_icon.width = 256
+      SiteSetting.large_icon.height = 256
+      expect(subject).to eq(I18n.t('dashboard.pwa_config_icon_warning', base_path: Discourse.base_path))
+    end
+
+    it 'alerts for too long short_title' do
+      SiteSetting.large_icon.url = '/logo.png'
+      SiteSetting.large_icon.width = 512
+      SiteSetting.large_icon.height = 512
+      SiteSetting.short_title = 'stringwithmorethan12chars'
+      expect(subject).to eq(I18n.t('dashboard.pwa_config_title_warning', base_path: Discourse.base_path))
+    end
+
+    it 'returns nil when everything is ok' do
+      SiteSetting.large_icon.url = '/logo.png'
+      SiteSetting.large_icon.width = 512
+      SiteSetting.large_icon.height = 512
+      SiteSetting.short_title = 'title'
+      expect(subject).to eq(nil)
+    end
+  end
+
   describe 's3_config_check' do
     shared_examples 'problem detection for s3-dependent setting' do
       subject { described_class.new.s3_config_check }
